@@ -1,0 +1,573 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centanni Financial | Immersive Life Insurance Solutions</title>
+    <meta name="description" content="Experience the future of life insurance with our interactive, 3D-enhanced platform. Get the best rates from 40+ top carriers.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js for 3D graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#badffe',
+                            300: '#7cc7fd',
+                            400: '#38b0f8',
+                            500: '#0e9fe9',
+                            600: '#0282c7',
+                            700: '#036aa1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#fefce8',
+                            100: '#fef9c3',
+                            200: '#fef08a',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                            800: '#854d0e',
+                            900: '#713f12',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'gradient-x': 'gradientX 12s ease infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                         gradientX: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (for icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #F7F9FC; color: #334155; }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #0284c7, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .primary-button {
+            transition: all 0.3s ease;
+        }
+        .primary-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.2);
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .interactive-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1.5rem;
+            transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .interactive-card:hover {
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15);
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0ea5e9;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0ea5e9, #0284c7, #0c4a6e, #075985);
+            background-size: 400% 400%;
+            animation: gradientX 12s ease infinite;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[100]">
+        <div class="loader"></div>
+    </div>
+    
+    <!-- Header -->
+    <header class="sticky top-4 z-50 container mx-auto px-4">
+        <div class="bg-white/70 backdrop-blur-lg rounded-xl shadow-sm flex justify-between items-center p-4">
+            <div class="flex items-center">
+                <svg class="w-8 h-8 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                <h1 class="text-xl sm:text-2xl font-bold">
+                    <span class="gradient-text">Centanni Financial</span>
+                </h1>
+            </div>
+            <nav id="desktop-nav" class="hidden md:flex items-center space-x-8">
+                <a href="#how-it-works" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">How It Works</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">Testimonials</a>
+                <a href="#about" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">About</a>
+                <a href="#quote-form" class="bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg primary-button">Get Quote</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none" aria-label="Menu">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-2 bg-white/90 backdrop-blur-lg rounded-xl shadow-lg">
+            <a href="#how-it-works" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">How It Works</a>
+            <a href="#testimonials" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">Testimonials</a>
+            <a href="#about" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">About</a>
+            <a href="#quote-form" class="block text-center bg-primary-600 text-white p-4 font-semibold rounded-b-xl">Get Quote</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="relative py-16 md:py-32 overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-12 md:mb-0 text-center md:text-left">
+                        <p class="text-primary-700 font-semibold mb-4">TRUSTED BY 10,000+ FAMILIES</p>
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 leading-tight mb-6">
+                            <span class="block">Secure Your Family's</span>
+                            <span class="block">Future <span class="gradient-text">Today</span></span>
+                        </h1>
+                        <p class="text-lg sm:text-xl text-gray-700 font-medium mb-8 max-w-lg mx-auto md:mx-0">We compare <strong>40+ top carriers</strong> to find you the perfect life insurance coverage at the <strong>lowest price</strong>.</p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                            <a href="#quote-form" class="bg-primary-600 text-white font-bold py-4 px-8 rounded-lg primary-button text-center">
+                                Get Free Quote <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                            <a href="#how-it-works" class="bg-white text-gray-800 font-semibold py-4 px-8 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-center">
+                                How It Works
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center" style="perspective: 1000px;">
+                        <div class="relative interactive-card">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Happy family protected by life insurance" 
+                                 class="relative rounded-2xl w-full max-w-md">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust Badges -->
+        <section class="py-12">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-8">
+                    <p class="text-sm font-semibold text-gray-600 uppercase tracking-wider">TRUSTED BY THE BEST</p>
+                </div>
+                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 text-gray-600 font-bold">
+                    <span class="text-lg">Americo</span>
+                    <span class="text-lg">Mutual of Omaha</span>
+                    <span class="text-lg">Ethos</span>
+                    <span class="text-lg">AIG</span>
+                    <span class="text-lg">Corebridge</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Simple, Transparent Process</h2>
+                    <p class="text-lg text-gray-700">Getting the right life insurance shouldn't be complicated. We've streamlined the process to save you time and money.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12" style="perspective: 1000px;">
+                    <!-- Step 1 -->
+                    <div class="interactive-card p-8 text-center">
+                        <div class="bg-primary-100 text-primary-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
+                            <span class="text-2xl font-bold">1</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Share Your Needs</h3>
+                        <p class="text-gray-700 mb-4">Complete our simple 2-minute form. No medical exam required to get started.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="interactive-card p-8 text-center">
+                        <div class="bg-primary-100 text-primary-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
+                            <span class="text-2xl font-bold">2</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Personalized Options</h3>
+                        <p class="text-gray-700 mb-4">We analyze 40+ carriers to present you with the best 3-5 options tailored to your situation.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="interactive-card p-8 text-center">
+                        <div class="bg-primary-100 text-primary-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
+                            <span class="text-2xl font-bold">3</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Get Protected</h3>
+                        <p class="text-gray-700 mb-4">Choose your preferred plan and complete the simple application. Some approvals happen same-day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="py-20 bg-primary-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Clients Say</h2>
+                    <p class="text-lg text-gray-700">Don't just take our word for it. Here's what families like yours have experienced.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
+                                 alt="Sarah J." 
+                                 class="w-12 h-12 rounded-full mr-4 object-cover">
+                            <div>
+                                <div class="font-bold text-gray-800">Sarah J.</div>
+                                <div class="text-sm text-gray-600">Mother of two, Chicago</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">"David found us a policy that was <strong>30% less</strong> than what we were quoted elsewhere for the same coverage. The process was so easy and he answered all our questions patiently."</p>
+                        <div class="mt-4 flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
+                                 alt="Michael T." 
+                                 class="w-12 h-12 rounded-full mr-4 object-cover">
+                            <div>
+                                <div class="font-bold text-gray-800">Michael T.</div>
+                                <div class="text-sm text-gray-600">Business owner, Austin</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">"As a small business owner, I needed flexible coverage. Centanni Financial understood my unique needs and found a solution that works with my cash flow."</p>
+                        <div class="mt-4 flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all">
+                        <div class="flex items-center mb-4">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
+                                 alt="The Rodriguez Family" 
+                                 class="w-12 h-12 rounded-full mr-4 object-cover">
+                            <div>
+                                <div class="font-bold text-gray-800">The Rodriguez Family</div>
+                                <div class="text-sm text-gray-600">Young family, Miami</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-700">"We were overwhelmed by all the options until we found Centanni. They explained everything in plain English and got us coverage that fits our budget."</p>
+                        <div class="mt-4 flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 gradient-bg text-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Protect Your Loved Ones?</h2>
+                <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Get your personalized quote in minutes. No medical exam required to get started.</p>
+                <a href="#quote-form" class="bg-white text-primary-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl inline-block">
+                    Get Your Free Quote <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Lead Capture Form -->
+        <section id="quote-form" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-hard">
+                    <h2 class="text-3xl font-bold text-gray-800 text-center mb-2">Start Your Free Quote Now</h2>
+                    <p class="text-gray-700 text-center mb-8">There's no cost or obligation. See your options today.</p>
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScIcsqyyJT7s86LGOT91P55alqSVSUksZQ22XIi6EeikGhbLg/viewform?embedded=true" width="100%" height="1600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
+                    <div class="md:w-1/2">
+                        <!-- === IMAGE FIXED HERE === -->
+                        <!-- Replace the src below with the final, public URL of David's photo -->
+                        <img src="https://placehold.co/800x600/e0f2fe/334155?text=David+Conti" 
+                             alt="David Conti, your insurance advisor" 
+                             class="rounded-xl shadow-xl w-full"
+                             loading="lazy">
+                    </div>
+                    <div class="md:w-1/2">
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Your Trusted Insurance Advisor</h3>
+                        <p class="text-gray-700 mb-6">"My name is David Conti, and I founded Centanni Financial with one simple mission: to make life insurance straightforward, affordable, and accessible for every family."</p>
+                        <p class="text-gray-700 mb-6">"With over 15 years in the industry, I've seen how confusing and overwhelming insurance can be. That's why I built an independent brokerage - to cut through the complexity and give you unbiased advice you can trust."</p>
+                        <div class="flex flex-wrap gap-4 mt-8">
+                            <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-secondary-500 text-white font-bold py-3 px-6 rounded-lg primary-button text-center">
+                                Book a Free Consultation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Chatbot -->
+    <div id="chat-widget-container" class="fixed bottom-5 right-5 z-50">
+        <button id="chat-open-button" class="bg-primary-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg primary-button">
+            <i class="fas fa-comments text-2xl"></i>
+        </button>
+        <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden" style="max-height: 70vh;">
+            <div class="bg-primary-600 text-white p-4 flex justify-between items-center">
+                <h3 class="font-bold text-lg">Quote Assistant</h3>
+                <button id="chat-close-button" class="text-white">&times;</button>
+            </div>
+            <div id="chat-messages" class="p-4 h-80 overflow-y-auto">
+                <!-- Initial greeting from bot -->
+                <div class="mb-4">
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg inline-block max-w-xs">
+                        Hello! How can I help you with the quote form today?
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-200">
+                <form id="chat-form" class="flex gap-2">
+                    <input type="text" id="chat-input" class="w-full px-4 py-2 rounded-lg border-gray-300 focus:border-primary-500 focus:ring-primary-500" placeholder="Ask a question...">
+                    <button type="submit" class="bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg primary-button">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingModal = document.getElementById('loading-modal');
+            let chatHistory = [];
+
+            // --- Gemini API Call Function ---
+            async function callGemini(prompt) {
+                loadingModal.classList.remove('hidden');
+                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                const apiKey = ""; // API key will be handled by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) {
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+                    const result = await response.json();
+                    loadingModal.classList.add('hidden');
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        console.error("Gemini API response was empty or malformed.", result);
+                        return "Sorry, I couldn't get a response. Please try again.";
+                    }
+                } catch (error) {
+                    loadingModal.classList.add('hidden');
+                    console.error("Error calling Gemini API:", error);
+                    return "Sorry, an error occurred while trying to get an answer.";
+                }
+            }
+
+            // --- Chatbot Logic ---
+            const chatOpenButton = document.getElementById('chat-open-button');
+            const chatCloseButton = document.getElementById('chat-close-button');
+            const chatWindow = document.getElementById('chat-window');
+            const chatForm = document.getElementById('chat-form');
+            const chatInput = document.getElementById('chat-input');
+            const chatMessages = document.getElementById('chat-messages');
+
+            chatOpenButton.addEventListener('click', () => chatWindow.classList.toggle('hidden'));
+            chatCloseButton.addEventListener('click', () => chatWindow.classList.add('hidden'));
+
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const userMessage = chatInput.value.trim();
+                if (!userMessage) return;
+
+                appendMessage(userMessage, 'user');
+                chatInput.value = '';
+
+                const conversationHistory = chatHistory.map(entry => `${entry.role}: ${entry.message}`).join('\n');
+                const prompt = `You are a friendly and helpful AI assistant for Centanni Financial. Your ONLY purpose is to help users fill out the life insurance quote form. If a user asks to book a meeting or consultation, provide them with this link: https://calendly.com/centannifinancial/30min. Do NOT give financial advice or answer off-topic questions. If asked an off-topic question, gently guide the user back to the quote form. Here is the conversation so far:\n\n${conversationHistory}\n\nUser: ${userMessage}\n\nAssistant:`;
+                
+                const aiResponse = await callGemini(prompt);
+                appendMessage(aiResponse, 'assistant');
+
+                chatHistory.push({ role: 'user', message: userMessage });
+                chatHistory.push({ role: 'assistant', message: aiResponse });
+            });
+
+            function appendMessage(message, sender) {
+                const messageWrapper = document.createElement('div');
+                messageWrapper.classList.add('mb-4');
+                
+                const messageBubble = document.createElement('div');
+                messageBubble.classList.add('p-3', 'rounded-lg', 'inline-block', 'max-w-xs');
+                messageBubble.textContent = message;
+
+                if (sender === 'user') {
+                    messageWrapper.classList.add('text-right');
+                    messageBubble.classList.add('bg-primary-600', 'text-white');
+                } else {
+                    messageBubble.classList.add('bg-gray-200', 'text-gray-800');
+                }
+
+                messageWrapper.appendChild(messageBubble);
+                chatMessages.appendChild(messageWrapper);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // --- 3D Background ---
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const particlesGeometry = new THREE.BufferGeometry;
+            const particlesCount = 5000;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for(let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.005,
+                color: 0x0282c7,
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            camera.position.z = 5;
+
+            let mouseX = 0;
+            let mouseY = 0;
+            document.addEventListener('mousemove', (event) => {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            });
+
+            const clock = new THREE.Clock();
+            const animate = () => {
+                const elapsedTime = clock.getElapsedTime();
+                particlesMesh.rotation.y = -0.1 * elapsedTime;
+                if(mouseX > 0) {
+                    particlesMesh.rotation.x = -mouseY * (elapsedTime * 0.00008);
+                    particlesMesh.rotation.y = -mouseX * (elapsedTime * 0.00008);
+                }
+                renderer.render(scene, camera);
+                window.requestAnimationFrame(animate);
+            };
+            animate();
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+
+            // --- 3D Interactive Cards ---
+            const cards = document.querySelectorAll('.interactive-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const rotateX = (y / rect.height - 0.5) * -20;
+                    const rotateY = (x / rect.width - 0.5) * 20;
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
