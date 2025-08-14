@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Centanni Financial | Immersive Life Insurance Solutions</title>
-    <meta name="description" content="Experience the future of life insurance with our interactive, 3D-enhanced platform. Get the best rates from 40+ top carriers.">
+    <meta name="description" content="Explore solutions like Life Insurance, Mortgage Protection, and IULs. Get the best rates from 40+ top carriers.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js for 3D graphics -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     
+    <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -53,10 +54,14 @@
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' }
                         },
-                         gradientX: {
+                          gradientX: {
                             '0%, 100%': { 'background-position': '0% 50%' },
                             '50%': { 'background-position': '100% 50%' }
                         }
+                    },
+                    boxShadow: {
+                        'hard': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                        'header': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)'
                     }
                 }
             }
@@ -137,38 +142,40 @@
 
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Loading Modal -->
+    <!-- Loading Modal for API calls -->
     <div id="loading-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-[100]">
         <div class="loader"></div>
     </div>
     
     <!-- Header -->
-    <header class="sticky top-4 z-50 container mx-auto px-4">
-        <div class="bg-white/70 backdrop-blur-lg rounded-xl shadow-sm flex justify-between items-center p-4">
-            <div class="flex items-center">
+    <header id="main-header" class="sticky top-4 z-50 container mx-auto px-4 transition-shadow duration-300">
+        <div class="bg-white/80 backdrop-blur-lg rounded-xl flex justify-between items-center p-4">
+            <a href="#" class="flex items-center" aria-label="Centanni Financial Home">
                 <svg class="w-8 h-8 text-primary-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
                 <h1 class="text-xl sm:text-2xl font-bold">
                     <span class="gradient-text">Centanni Financial</span>
                 </h1>
-            </div>
+            </a>
             <nav id="desktop-nav" class="hidden md:flex items-center space-x-8">
                 <a href="#how-it-works" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">How It Works</a>
+                <a href="#services" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">Services</a>
                 <a href="#testimonials" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">Testimonials</a>
                 <a href="#about" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">About</a>
-                <a href="#quote-form" class="bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg primary-button">Get Quote</a>
+                <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg primary-button">Book a Call</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none" aria-label="Menu">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden mt-2 bg-white/90 backdrop-blur-lg rounded-xl shadow-lg">
+        <div id="mobile-menu" class="hidden md:hidden mt-2 bg-white/95 backdrop-blur-lg rounded-xl shadow-lg">
             <a href="#how-it-works" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">How It Works</a>
+            <a href="#services" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">Services</a>
             <a href="#testimonials" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">Testimonials</a>
             <a href="#about" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">About</a>
-            <a href="#quote-form" class="block text-center bg-primary-600 text-white p-4 font-semibold rounded-b-xl">Get Quote</a>
+            <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="block text-center bg-primary-600 text-white p-4 font-semibold rounded-b-xl">Book a Call</a>
         </div>
     </header>
 
@@ -186,19 +193,20 @@
                         </h1>
                         <p class="text-lg sm:text-xl text-gray-700 font-medium mb-8 max-w-lg mx-auto md:mx-0">We compare <strong>40+ top carriers</strong> to find you the perfect life insurance coverage at the <strong>lowest price</strong>.</p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                            <a href="#quote-form" class="bg-primary-600 text-white font-bold py-4 px-8 rounded-lg primary-button text-center">
-                                Get Free Quote <i class="fas fa-arrow-right ml-2"></i>
+                            <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-primary-600 text-white font-bold py-4 px-8 rounded-lg primary-button text-center">
+                                Schedule Free Consultation <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                             <a href="#how-it-works" class="bg-white text-gray-800 font-semibold py-4 px-8 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-center">
-                                How It Works
+                                Learn More
                             </a>
                         </div>
                     </div>
                     <div class="md:w-1/2 flex justify-center" style="perspective: 1000px;">
                         <div class="relative interactive-card">
-                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
-                                 alt="Happy family protected by life insurance" 
-                                 class="relative rounded-2xl w-full max-w-md">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"  
+                                 alt="Financial advisor meeting with a happy client" 
+                                 class="relative rounded-2xl w-full max-w-md"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/800x600/e0f2fe/334155?text=Peace+of+Mind';">
                         </div>
                     </div>
                 </div>
@@ -209,14 +217,15 @@
         <section class="py-12">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-8">
-                    <p class="text-sm font-semibold text-gray-600 uppercase tracking-wider">TRUSTED BY THE BEST</p>
+                    <p class="text-sm font-semibold text-gray-600 uppercase tracking-wider">PARTNERED WITH AMERICA'S TOP CARRIERS</p>
                 </div>
-                <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 text-gray-600 font-bold">
-                    <span class="text-lg">Americo</span>
-                    <span class="text-lg">Mutual of Omaha</span>
-                    <span class="text-lg">Ethos</span>
-                    <span class="text-lg">AIG</span>
-                    <span class="text-lg">Corebridge</span>
+                <div class="flex flex-wrap justify-center items-center gap-x-8 gap-y-4 md:gap-x-12 text-gray-500">
+                    <span class="font-semibold text-lg">Americo</span>
+                    <span class="font-semibold text-lg">Mutual of Omaha</span>
+                    <span class="font-semibold text-lg">Ethos</span>
+                    <span class="font-semibold text-lg">AIG</span>
+                    <span class="font-semibold text-lg">Corebridge</span>
+                    <span class="font-semibold text-lg">& More</span>
                 </div>
             </div>
         </section>
@@ -234,15 +243,15 @@
                         <div class="bg-primary-100 text-primary-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
                             <span class="text-2xl font-bold">1</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">Share Your Needs</h3>
-                        <p class="text-gray-700 mb-4">Complete our simple 2-minute form. No medical exam required to get started.</p>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Book a Free Call</h3>
+                        <p class="text-gray-700 mb-4">Schedule a no-obligation consultation to discuss your needs. It's quick, easy, and confidential.</p>
                     </div>
                     <!-- Step 2 -->
                     <div class="interactive-card p-8 text-center">
                         <div class="bg-primary-100 text-primary-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
                             <span class="text-2xl font-bold">2</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">Personalized Options</h3>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Get Personalized Options</h3>
                         <p class="text-gray-700 mb-4">We analyze 40+ carriers to present you with the best 3-5 options tailored to your situation.</p>
                     </div>
                     <!-- Step 3 -->
@@ -252,6 +261,36 @@
                         </div>
                         <h3 class="text-xl font-bold mb-4 text-gray-800">Get Protected</h3>
                         <p class="text-gray-700 mb-4">Choose your preferred plan and complete the simple application. Some approvals happen same-day.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW Services Section -->
+        <section id="services" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 max-w-3xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Solutions That Change Lives</h2>
+                    <p class="text-lg text-gray-700">It's more than just insurance; it's a plan for a secure future. Discover how our tailored solutions can provide peace of mind and create lasting financial well-being for you and your loved ones.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Card 1: Life Insurance -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all border-t-4 border-primary-500">
+                        <div class="text-primary-600 mb-4"><i class="fas fa-heart-pulse text-4xl"></i></div>
+                        <h3 class="text-2xl font-bold mb-4 text-gray-800">Life Insurance</h3>
+                        <p class="text-gray-700">Provide a financial safety net for your loved ones. Ensure they can cover daily expenses, fund education, and maintain their standard of living, no matter what the future holds. It's the ultimate expression of love and care.</p>
+                    </div>
+                    <!-- Card 2: Mortgage Protection -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all border-t-4 border-secondary-500">
+                        <div class="text-secondary-600 mb-4"><i class="fas fa-house-chimney-user text-4xl"></i></div>
+                        <h3 class="text-2xl font-bold mb-4 text-gray-800">Mortgage Protection</h3>
+                        <p class="text-gray-700">Keep your house a home for your family, always. This specialized insurance pays off your mortgage if you pass away, removing the burden of monthly payments and ensuring your loved ones can stay in the home they cherish.</p>
+                    </div>
+                    <!-- Card 3: IUL & Annuities -->
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-lg hover:shadow-xl transition-all border-t-4 border-primary-800">
+                        <div class="text-primary-800 mb-4"><i class="fas fa-chart-line text-4xl"></i></div>
+                        <h3 class="text-2xl font-bold mb-4 text-gray-800">IUL & Annuities</h3>
+                        <p class="text-gray-700">Build a powerful financial future. Grow your wealth with tax advantages through an Indexed Universal Life (IUL) policy, and create a guaranteed stream of income for a worry-free retirement with our tailored annuity plans.</p>
                     </div>
                 </div>
             </div>
@@ -270,7 +309,8 @@
                         <div class="flex items-center mb-4">
                             <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
                                  alt="Sarah J." 
-                                 class="w-12 h-12 rounded-full mr-4 object-cover">
+                                 class="w-12 h-12 rounded-full mr-4 object-cover"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/e0f2fe/334155?text=S';">
                             <div>
                                 <div class="font-bold text-gray-800">Sarah J.</div>
                                 <div class="text-sm text-gray-600">Mother of two, Chicago</div>
@@ -278,11 +318,7 @@
                         </div>
                         <p class="text-gray-700">"David found us a policy that was <strong>30% less</strong> than what we were quoted elsewhere for the same coverage. The process was so easy and he answered all our questions patiently."</p>
                         <div class="mt-4 flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
                     </div>
                     <!-- Testimonial 2 -->
@@ -290,7 +326,8 @@
                         <div class="flex items-center mb-4">
                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
                                  alt="Michael T." 
-                                 class="w-12 h-12 rounded-full mr-4 object-cover">
+                                 class="w-12 h-12 rounded-full mr-4 object-cover"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/e0f2fe/334155?text=M';">
                             <div>
                                 <div class="font-bold text-gray-800">Michael T.</div>
                                 <div class="text-sm text-gray-600">Business owner, Austin</div>
@@ -298,11 +335,7 @@
                         </div>
                         <p class="text-gray-700">"As a small business owner, I needed flexible coverage. Centanni Financial understood my unique needs and found a solution that works with my cash flow."</p>
                         <div class="mt-4 flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
                     </div>
                     <!-- Testimonial 3 -->
@@ -310,7 +343,8 @@
                         <div class="flex items-center mb-4">
                             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80" 
                                  alt="The Rodriguez Family" 
-                                 class="w-12 h-12 rounded-full mr-4 object-cover">
+                                 class="w-12 h-12 rounded-full mr-4 object-cover"
+                                 onerror="this.onerror=null;this.src='https://placehold.co/200x200/e0f2fe/334155?text=R';">
                             <div>
                                 <div class="font-bold text-gray-800">The Rodriguez Family</div>
                                 <div class="text-sm text-gray-600">Young family, Miami</div>
@@ -318,11 +352,7 @@
                         </div>
                         <p class="text-gray-700">"We were overwhelmed by all the options until we found Centanni. They explained everything in plain English and got us coverage that fits our budget."</p>
                         <div class="mt-4 flex text-yellow-400">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
                     </div>
                 </div>
@@ -333,21 +363,10 @@
         <section class="py-20 gradient-bg text-white">
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Protect Your Loved Ones?</h2>
-                <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Get your personalized quote in minutes. No medical exam required to get started.</p>
-                <a href="#quote-form" class="bg-white text-primary-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl inline-block">
-                    Get Your Free Quote <i class="fas fa-arrow-right ml-2"></i>
+                <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Your peace of mind is just a conversation away. Get expert, unbiased advice today.</p>
+                <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-white text-primary-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl inline-block">
+                    Schedule Your Free Consultation <i class="fas fa-arrow-right ml-2"></i>
                 </a>
-            </div>
-        </section>
-
-        <!-- Lead Capture Form -->
-        <section id="quote-form" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-hard">
-                    <h2 class="text-3xl font-bold text-gray-800 text-center mb-2">Start Your Free Quote Now</h2>
-                    <p class="text-gray-700 text-center mb-8">There's no cost or obligation. See your options today.</p>
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScIcsqyyJT7s86LGOT91P55alqSVSUksZQ22XIi6EeikGhbLg/viewform?embedded=true" width="100%" height="1600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-                </div>
             </div>
         </section>
 
@@ -356,7 +375,6 @@
             <div class="container mx-auto px-6">
                 <div class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
                     <div class="md:w-1/2">
-                        <!-- === IMAGE FIXED HERE === -->
                         <!-- Replace the src below with the final, public URL of David's photo -->
                         <img src="https://placehold.co/800x600/e0f2fe/334155?text=David+Conti" 
                              alt="David Conti, your insurance advisor" 
@@ -378,6 +396,40 @@
         </section>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Centanni Financial</h3>
+                    <p class="text-gray-400">Your trusted partner in securing your family's financial future. We provide unbiased advice and access to 40+ top-rated insurance carriers.</p>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-white transition-colors">How It Works</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">Services</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-white transition-colors">Testimonials</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="https://calendly.com/centannifinancial/30min" target="_blank" class="text-gray-400 hover:text-white transition-colors">Book a Call</a></li>
+                    </ul>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <p class="text-gray-400">Have questions? We're here to help.</p>
+                    <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="mt-4 inline-block bg-primary-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-primary-500 transition-colors">Schedule a Consultation</a>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-700 pt-8 text-center text-gray-500">
+                <p>&copy; 2024 Centanni Financial. All Rights Reserved.</p>
+                <p class="text-sm mt-2">This is a solicitation for insurance. A licensed agent may contact you.</p>
+            </div>
+        </div>
+    </footer>
+
     <!-- Chatbot -->
     <div id="chat-widget-container" class="fixed bottom-5 right-5 z-50">
         <button id="chat-open-button" class="bg-primary-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg primary-button">
@@ -385,14 +437,14 @@
         </button>
         <div id="chat-window" class="hidden absolute bottom-20 right-0 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden" style="max-height: 70vh;">
             <div class="bg-primary-600 text-white p-4 flex justify-between items-center">
-                <h3 class="font-bold text-lg">Quote Assistant</h3>
-                <button id="chat-close-button" class="text-white">&times;</button>
+                <h3 class="font-bold text-lg">AI Assistant</h3>
+                <button id="chat-close-button" class="text-white text-2xl leading-none">&times;</button>
             </div>
             <div id="chat-messages" class="p-4 h-80 overflow-y-auto">
                 <!-- Initial greeting from bot -->
                 <div class="mb-4">
                     <div class="bg-gray-200 text-gray-800 p-3 rounded-lg inline-block max-w-xs">
-                        Hello! How can I help you with the quote form today?
+                        Hello! I'm an AI assistant. I can answer questions about our services or help you schedule a consultation. How can I help?
                     </div>
                 </div>
             </div>
@@ -413,10 +465,12 @@
             // --- Gemini API Call Function ---
             async function callGemini(prompt) {
                 loadingModal.classList.remove('hidden');
-                // === API KEY ADDED HERE ===
-                const apiKey = "AIzaSyDvhg4qOjUtkUWbh6MGcdiL2AJ9V6ueuAg"; 
+                
+                const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
+                
+                let fullHistory = [...chatHistory, { role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: fullHistory };
 
                 try {
                     const response = await fetch(apiUrl, {
@@ -424,11 +478,13 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
+
                     if (!response.ok) {
                         throw new Error(`API request failed with status ${response.status}`);
                     }
+
                     const result = await response.json();
-                    loadingModal.classList.add('hidden');
+                    
                     if (result.candidates && result.candidates.length > 0 &&
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
@@ -438,9 +494,10 @@
                         return "Sorry, I couldn't get a response. Please try again.";
                     }
                 } catch (error) {
-                    loadingModal.classList.add('hidden');
                     console.error("Error calling Gemini API:", error);
                     return "Sorry, an error occurred while trying to get an answer.";
+                } finally {
+                    loadingModal.classList.add('hidden');
                 }
             }
 
@@ -462,29 +519,30 @@
 
                 appendMessage(userMessage, 'user');
                 chatInput.value = '';
-
-                const conversationHistory = chatHistory.map(entry => `${entry.role}: ${entry.message}`).join('\n');
-                const prompt = `You are a friendly and helpful AI assistant for Centanni Financial. Your ONLY purpose is to help users fill out the life insurance quote form. If a user asks to book a meeting or consultation, provide them with this link: https://calendly.com/centannifinancial/30min. Do NOT give financial advice or answer off-topic questions. If asked an off-topic question, gently guide the user back to the quote form. Here is the conversation so far:\n\n${conversationHistory}\n\nUser: ${userMessage}\n\nAssistant:`;
                 
-                const aiResponse = await callGemini(prompt);
+                chatHistory.push({ role: 'user', parts: [{ text: userMessage }] });
+
+                const systemPrompt = `You are a friendly and helpful AI assistant for Centanni Financial. Your purpose is to answer questions about life insurance and the company's services (Life Insurance, Mortgage Protection, IUL & Annuities). If a user asks to book a meeting, schedule a consultation, or get a quote, provide them with this Calendly link: https://calendly.com/centannifinancial/30min. Do NOT give financial advice or answer off-topic questions. If asked an off-topic question, gently guide the user back to the topic of life insurance.`;
+                
+                const aiResponse = await callGemini(systemPrompt + "\n\nUser: " + userMessage);
                 appendMessage(aiResponse, 'assistant');
 
-                chatHistory.push({ role: 'user', message: userMessage });
-                chatHistory.push({ role: 'assistant', message: aiResponse });
+                chatHistory.push({ role: 'model', parts: [{ text: aiResponse }] });
             });
 
             function appendMessage(message, sender) {
                 const messageWrapper = document.createElement('div');
-                messageWrapper.classList.add('mb-4');
+                messageWrapper.classList.add('mb-4', 'flex');
                 
                 const messageBubble = document.createElement('div');
-                messageBubble.classList.add('p-3', 'rounded-lg', 'inline-block', 'max-w-xs');
+                messageBubble.classList.add('p-3', 'rounded-lg', 'max-w-xs', 'shadow-sm');
                 messageBubble.textContent = message;
 
                 if (sender === 'user') {
-                    messageWrapper.classList.add('text-right');
+                    messageWrapper.classList.add('justify-end');
                     messageBubble.classList.add('bg-primary-600', 'text-white');
                 } else {
+                    messageWrapper.classList.add('justify-start');
                     messageBubble.classList.add('bg-gray-200', 'text-gray-800');
                 }
 
@@ -501,6 +559,16 @@
                     mobileMenu.classList.toggle('hidden');
                 });
             }
+
+            // --- Header Shadow on Scroll ---
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    header.classList.add('shadow-header');
+                } else {
+                    header.classList.remove('shadow-header');
+                }
+            });
 
             // --- 3D Background ---
             const scene = new THREE.Scene();
@@ -559,9 +627,9 @@
                     const rect = card.getBoundingClientRect();
                     const x = e.clientX - rect.left;
                     const y = e.clientY - rect.top;
-                    const rotateX = (y / rect.height - 0.5) * -20;
-                    const rotateY = (x / rect.width - 0.5) * 20;
-                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+                    const rotateX = (y / rect.height - 0.5) * -15;
+                    const rotateY = (x / rect.width - 0.5) * 15;
+                    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
                 });
                 card.addEventListener('mouseleave', () => {
                     card.style.transform = 'rotateX(0) rotateY(0) scale(1)';
