@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -136,6 +136,54 @@
             background-size: 400% 400%;
             animation: gradientX 12s ease infinite;
         }
+
+        /* Styles for the Zoho Form */
+        .zcwf_title { display: none; }
+        .zcwf_row { margin-bottom: 1.5rem; }
+        .zcwf_col_lab { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #475569; }
+        .zcwf_col_fld input[type="text"], .zcwf_col_fld_slt {
+            width: 100% !important;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1 !important;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .zcwf_col_fld input[type="text"]:focus, .zcwf_col_fld_slt:focus {
+            outline: none;
+            border-color: #0e9fe9 !important;
+            box-shadow: 0 0 0 2px rgba(14, 159, 233, 0.2);
+        }
+        .zcwf_col_fld_slt {
+            background-color: white;
+            height: auto !important; /* Override default height */
+            padding: 0.75rem 1rem !important;
+        }
+        .zcwf_button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #formsubmit {
+            background-color: #0282c7;
+            color: white;
+            border: none;
+        }
+        #formsubmit:hover {
+            background-color: #036aa1;
+            transform: translateY(-2px);
+        }
+        input[name="reset"] {
+            background-color: #e2e8f0;
+            color: #475569;
+            border: 1px solid #cbd5e1;
+        }
+        input[name="reset"]:hover {
+            background-color: #cbd5e1;
+        }
+        .zcwf_col_help { display: none; } /* Hiding help text for cleaner look */
+
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -163,7 +211,7 @@
                 <a href="#services" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">Services</a>
                 <a href="#testimonials" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">Testimonials</a>
                 <a href="#about" class="text-gray-700 hover:text-primary-600 transition-colors font-medium">About</a>
-                <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg primary-button">Book a Call</a>
+                <a href="#get-a-quote" class="bg-primary-600 text-white font-semibold py-2 px-6 rounded-lg primary-button">Get a Quote</a>
             </nav>
             <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none" aria-label="Menu">
                 <i class="fas fa-bars text-2xl"></i>
@@ -175,7 +223,7 @@
             <a href="#services" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">Services</a>
             <a href="#testimonials" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">Testimonials</a>
             <a href="#about" class="block text-center text-gray-700 hover:text-primary-600 p-4 font-medium">About</a>
-            <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="block text-center bg-primary-600 text-white p-4 font-semibold rounded-b-xl">Book a Call</a>
+            <a href="#get-a-quote" class="block text-center bg-primary-600 text-white p-4 font-semibold rounded-b-xl">Get a Quote</a>
         </div>
     </header>
 
@@ -193,8 +241,8 @@
                         </h1>
                         <p class="text-lg sm:text-xl text-gray-700 font-medium mb-8 max-w-lg mx-auto md:mx-0">We compare <strong>40+ top carriers</strong> to find you the perfect life insurance coverage at the <strong>lowest price</strong>.</p>
                         <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                            <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-primary-600 text-white font-bold py-4 px-8 rounded-lg primary-button text-center">
-                                Schedule Free Consultation <i class="fas fa-arrow-right ml-2"></i>
+                            <a href="#get-a-quote" class="bg-primary-600 text-white font-bold py-4 px-8 rounded-lg primary-button text-center">
+                                Get a Free Quote <i class="fas fa-arrow-right ml-2"></i>
                             </a>
                             <a href="#how-it-works" class="bg-white text-gray-800 font-semibold py-4 px-8 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-center">
                                 Learn More
@@ -230,6 +278,155 @@
             </div>
         </section>
 
+        <!-- Lead Capture Form Section -->
+        <section id="get-a-quote" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-hard">
+                    <h2 class="text-3xl font-bold text-gray-800 text-center mb-2">Start Your Free Quote Now</h2>
+                    <p class="text-gray-700 text-center mb-8">There's no cost or obligation. See your options today.</p>
+                    
+                    <!-- Zoho Form Starts Here -->
+                    <div id='crmWebToEntityForm' class='zcwf_lblLeft crmWebToEntityForm'>
+                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                        <meta http-equiv='content-type' content='text/html;charset=UTF-8'>
+                        <form id='webform6942837000000572696' action='https://crm.zoho.com/crm/WebToLeadForm' name='WebToLeads6942837000000572696' method='POST' onsubmit='javascript:document.charset="UTF-8"; return checkMandatory6942837000000572696()' accept-charset='UTF-8'>
+                            <input type='text' style='display:none;' name='xnQsjsdp' value='94b936b370893584d52933a5b61848c3372c7b2063593e93707dc1ec74b18686' />
+                            <input type='hidden' name='zc_gad' id='zc_gad' value='' />
+                            <input type='text' style='display:none;' name='xmIwtLD' value='ccf50fb31748b55fe9480eb2522d21b02490bcc0da2080a05f4c13feb3f2b17f5c83dc02d7f0dc326926e1730919eaa4' />
+                            <input type='text' style='display:none;' name='actionType' value='TGVhZHM=' />
+                            <input type='text' style='display:none;' name='returnURL' value='#' />
+                            
+                            <div class='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='First_Name'>First Name</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='First_Name' name='First Name' maxlength='40' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='Last_Name'>Last Name<span style='color:red;'>*</span></label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='Last_Name' name='Last Name' maxlength='80' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='Email'>Email</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' ftype='email' autocomplete='false' id='Email' name='Email' maxlength='100' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='Phone'>Phone</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='Phone' name='Phone' maxlength='30' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='City'>City</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='City' name='City' maxlength='100' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF3'>General Health</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF3' name='LEADCF3'>
+                                            <option value='-None-'>-Select-</option>
+                                            <option value='Good'>Good</option>
+                                            <option value='Fair'>Fair</option>
+                                            <option value='Poor'>Poor</option>
+                                            <option value='Other'>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF1'>Tobacco/Nicotine Use</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF1' name='LEADCF1'>
+                                            <option value='-None-'>-Select-</option>
+                                            <option value='Yes'>Yes</option>
+                                            <option value='No'>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF2'>Desired Coverage Amount</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF2' name='LEADCF2'>
+                                            <option value='-None-'>-Select-</option>
+                                            <option value='100000&#x24;'>$100,000</option>
+                                            <option value='250000&#x24;'>$250,000</option>
+                                            <option value='300000&#x24;'>$300,000</option>
+                                            <option value='600000&#x24;'>$600,000</option>
+                                            <option value='800000&#x24;'>$800,000</option>
+                                            <option value='1000000&#x24;'>$1,000,000</option>
+                                            <option value='1500000&#x24;'>$1,500,000</option>
+                                            <option value='2000000&#x24;'>$2,000,000</option>
+                                            <option value='5000000&#x24;'>$5,000,000+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='zcwf_row md:col-span-2'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF4'>Desired Term Length</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF4' name='LEADCF4'>
+                                            <option value='-None-'>-Select-</option>
+                                            <option value='5&#x20;Years'>5 Years</option>
+                                            <option value='10&#x20;Years'>10 Years</option>
+                                            <option value='30&#x20;Years'>30 Years</option>
+                                            <option value='other'>Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='zcwf_row'>
+                                <div class='zcwf_col_lab'></div>
+                                <div class='zcwf_col_fld flex gap-4 mt-4'>
+                                    <input type='submit' id='formsubmit' class='zcwf_button primary-button flex-grow' value='Submit' title='Submit' />
+                                    <input type='reset' class='zcwf_button flex-grow' name='reset' value='Reset' title='Reset' />
+                                </div>
+                            </div>
+                            <script>
+                                function validateEmail6942837000000572696() {
+                                    var form = document.forms['WebToLeads6942837000000572696'];
+                                    var emailFld = form.querySelectorAll('[ftype=email]');
+                                    for (var i = 0; i < emailFld.length; i++) {
+                                        var emailVal = emailFld[i].value;
+                                        if (emailVal.replace(/^\s+|\s+$/g, '').length != 0) {
+                                            var atpos = emailVal.indexOf('@');
+                                            var dotpos = emailVal.lastIndexOf('.');
+                                            if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= emailVal.length) {
+                                                alert('Please enter a valid email address.');
+                                                emailFld[i].focus();
+                                                return false;
+                                            }
+                                        }
+                                    }
+                                    return true;
+                                }
+
+                                function checkMandatory6942837000000572696() {
+                                    var mndFileds = new Array('Last Name');
+                                    var fldLangVal = new Array('Last Name');
+                                    for (var i = 0; i < mndFileds.length; i++) {
+                                        var fieldObj = document.forms['WebToLeads6942837000000572696'][mndFileds[i]];
+                                        if (fieldObj) {
+                                            if ((fieldObj.value).replace(/^\s+|\s+$/g, '').length == 0) {
+                                                alert(fldLangVal[i] + ' cannot be empty.');
+                                                fieldObj.focus();
+                                                return false;
+                                            } else if (fieldObj.nodeName == 'SELECT') {
+                                                if (fieldObj.options[fieldObj.selectedIndex].value == '-None-') {
+                                                    alert(fldLangVal[i] + ' cannot be none.');
+                                                    fieldObj.focus();
+                                                    return false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (!validateEmail6942837000000572696()) {
+                                        return false;
+                                    }
+                                    document.querySelector('.crmWebToEntityForm .formsubmit').setAttribute('disabled', true);
+                                }
+                            </script>
+                            <script id='wf_anal' src='https://crm.zohopublic.com/crm/WebFormAnalyticsServeServlet?rid=01604f68cfacfc59f9fcfcc4b4dc7622c7570fd12b6b63fe951a57b0a751c85f8578ac3ab3a6f1dd7d78ac736b29e6f5gid84e5ff138e493fc37ff6563dfd96abffc0a7fb527acc1584fd3d104d1de72848gid3226f087013f29cbf384b2796b27fbec1b5eab0447e056a062c30b7e990e2972gid148109935fd4e6457a9510e7cf65c39bead06d402c042e1c968ad5c07f073dcb&tw=420510b178d36e311895d40b9fcba78af1249c161d3e9658672e1bf440bd3352'></script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- How It Works -->
         <section id="how-it-works" class="py-20">
             <div class="container mx-auto px-6">
@@ -243,15 +440,15 @@
                         <div class="bg-primary-100 text-primary-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
                             <span class="text-2xl font-bold">1</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">Book a Free Call</h3>
-                        <p class="text-gray-700 mb-4">Schedule a no-obligation consultation to discuss your needs. It's quick, easy, and confidential.</p>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Request a Quote</h3>
+                        <p class="text-gray-700 mb-4">Fill out our quick form with some basic information. It only takes a few minutes.</p>
                     </div>
                     <!-- Step 2 -->
                     <div class="interactive-card p-8 text-center">
                         <div class="bg-primary-100 text-primary-600 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-6">
                             <span class="text-2xl font-bold">2</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-4 text-gray-800">Get Personalized Options</h3>
+                        <h3 class="text-xl font-bold mb-4 text-gray-800">Review Your Options</h3>
                         <p class="text-gray-700 mb-4">We analyze 40+ carriers to present you with the best 3-5 options tailored to your situation.</p>
                     </div>
                     <!-- Step 3 -->
@@ -260,13 +457,13 @@
                             <span class="text-2xl font-bold">3</span>
                         </div>
                         <h3 class="text-xl font-bold mb-4 text-gray-800">Get Protected</h3>
-                        <p class="text-gray-700 mb-4">Choose your preferred plan and complete the simple application. Some approvals happen same-day.</p>
+                        <p class="text-gray-700 mb-4">Choose your plan and complete the simple application. Some approvals happen same-day.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- NEW Services Section -->
+        <!-- Services Section -->
         <section id="services" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-16 max-w-3xl mx-auto">
@@ -364,27 +561,26 @@
             <div class="container mx-auto px-6 text-center">
                 <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Protect Your Loved Ones?</h2>
                 <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Your peace of mind is just a conversation away. Get expert, unbiased advice today.</p>
-                <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-white text-primary-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl inline-block">
-                    Schedule Your Free Consultation <i class="fas fa-arrow-right ml-2"></i>
+                <a href="#get-a-quote" class="bg-white text-primary-600 font-bold py-4 px-8 rounded-lg hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl inline-block">
+                    Get Your Free Quote <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 bg-gray-50">
+        <section id="about" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <div class="flex flex-col md:flex-row items-center gap-12 max-w-6xl mx-auto">
                     <div class="md:w-1/2">
-                        <!-- Replace the src below with the final, public URL of David's photo -->
-                        <img src="https://placehold.co/800x600/e0f2fe/334155?text=David+Conti" 
-                             alt="David Conti, your insurance advisor" 
+                        <img src="https://placehold.co/800x600/e0f2fe/334155?text=Centanni+Financial" 
+                             alt="Centanni Financial office" 
                              class="rounded-xl shadow-xl w-full"
                              loading="lazy">
                     </div>
                     <div class="md:w-1/2">
-                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Your Trusted Insurance Advisor</h3>
-                        <p class="text-gray-700 mb-6">"My name is David Conti, and I founded Centanni Financial with one simple mission: to make life insurance straightforward, affordable, and accessible for every family."</p>
-                        <p class="text-gray-700 mb-6">"With over 15 years in the industry, I've seen how confusing and overwhelming insurance can be. That's why I built an independent brokerage - to cut through the complexity and give you unbiased advice you can trust."</p>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Your Trusted Insurance Partner</h3>
+                        <p class="text-gray-700 mb-6">At Centanni Financial, our mission is simple: to make life insurance straightforward, affordable, and accessible for every family. We believe that protecting your loved ones shouldn't be complicated.</p>
+                        <p class="text-gray-700 mb-6">As an independent brokerage, we cut through the complexity of the insurance world. Our commitment is to provide clear, unbiased advice you can trust, ensuring you find the perfect coverage to protect what matters most.</p>
                         <div class="flex flex-wrap gap-4 mt-8">
                             <a href="https://calendly.com/centannifinancial/30min" target="_blank" class="bg-secondary-500 text-white font-bold py-3 px-6 rounded-lg primary-button text-center">
                                 Book a Free Consultation
