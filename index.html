@@ -10,6 +10,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js for 3D graphics -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- jQuery for Zoho Form -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js'></script>
     
     <!-- Custom Tailwind Config -->
     <script>
@@ -136,167 +138,76 @@
             background-size: 400% 400%;
             animation: gradientX 12s ease infinite;
         }
-
-        /* Styles for the NEW Zoho Form */
-        .formsubmit.zcwf_button{
-            color: white !important;
-            background: transparent linear-gradient(0deg, #0279FF 0%, #00A3F3 100%);
+        
+        /* Custom Zoho Form Styles */
+        .zcwf_title, .zcwf_col_help { display: none !important; }
+        #crmWebToEntityForm .zcwf_row { margin-bottom: 1.5rem; }
+        #crmWebToEntityForm .zcwf_col_lab { 
+            display: block; 
+            font-weight: 600; 
+            margin-bottom: 0.5rem; 
+            color: #475569;
+            font-size: 1rem; /* Increased font size */
         }
-        #crmWebToEntityForm.zcwf_lblLeft{
-            width: 100%;
-            padding: 25px;
-            margin: 0 auto;
-            box-sizing: border-box;
+        #crmWebToEntityForm .zcwf_col_fld input[type="text"], 
+        #crmWebToEntityForm .zcwf_col_fld textarea, 
+        #crmWebToEntityForm .zcwf_col_fld select {
+            width: 100% !important;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem !important;
+            border: 1px solid #cbd5e1 !important;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-size: 1rem; /* Increased font size */
+            float: none !important;
         }
-        #crmWebToEntityForm.zcwf_lblLeft *{
-            box-sizing: border-box;
+        #crmWebToEntityForm .zcwf_col_fld input[type="text"]:focus, 
+        #crmWebToEntityForm .zcwf_col_fld textarea:focus, 
+        #crmWebToEntityForm .zcwf_col_fld select:focus {
+            outline: none;
+            border-color: #0e9fe9 !important;
+            box-shadow: 0 0 0 2px rgba(14, 159, 233, 0.2);
         }
-        #crmWebToEntityForm {text-align: left;
+        #crmWebToEntityForm .zcwf_col_fld select {
+            background-color: white;
+            height: auto !important;
+            padding: 0.75rem 1rem !important;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
         }
-        #crmWebToEntityForm *{
-        direction: ltr;
+        #crmWebToEntityForm .zcwf_button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 1rem; /* Increased font size */
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: auto !important;
+            max-width: none !important;
         }
-        .zcwf_lblLeft .zcwf_title{
-        word-wrap: break-word;
-        padding: 0px 6px 10px;
-        font-weight: bold }
-        .zcwf_lblLeft.cpT_primaryBtn:hover{
-        background: linear-gradient(#02acff 0,#006be4 100%)no-repeat padding-box !important;
-        box-shadow: 0 -2px 0 0  #0159b9 inset !important;
-        border: 0 !important;
-        color:  #fff !important;
-        outline: 0 !important;
+        #crmWebToEntityForm #formsubmit {
+            background-color: #0282c7;
+            color: white;
+            border: none;
         }
-        .zcwf_lblLeft .zcwf_col_fld input[ type  = text], input[ type  = password], .zcwf_lblLeft .zcwf_col_fld textarea{
-        width: 60%;
-        border: 1px solid  #c0c6cc !important;
-        resize: vertical;
-        border-radius: 2px;
-        float: left;
+        #crmWebToEntityForm #formsubmit:hover {
+            background-color: #036aa1;
+            transform: translateY(-2px);
         }
-        .zcwf_lblLeft .zcwf_col_lab{
-        width: 30%;
-        word-break: break-word;
-        padding: 0px 6px 0px;
-        margin-right: 10px;
-        margin-top: 5px;
-        float: left;
-        min-height: 1px;
+        #crmWebToEntityForm input[name="reset"] {
+            background-color: #e2e8f0;
+            color: #475569;
+            border: 1px solid #cbd5e1;
         }
-        .zcwf_lblLeft .zcwf_col_fld{
-        float: left;
-        width: 68%;
-        padding: 0px 6px 0px;
-        position: relative;
-        margin-top: 5px;
+        #crmWebToEntityForm input[name="reset"]:hover {
+            background-color: #cbd5e1;
         }
-        .zcwf_lblLeft .zcwf_privacy {padding: 6px;
-        }
-        .zcwf_lblLeft .wfrm_fld_dpNn {display: none;
-        }
-        .dIB {display: inline-block;
-        }
-        .zcwf_lblLeft .zcwf_col_fld_slt{
-        width: 60%;
-        border: 1px solid  #ccc;
-        background:  #fff;
-        border-radius: 4px;
-        font-size: 12px;
-        float: left;
-        resize: vertical;
-        padding: 2px 5px;
-        }
-        .zcwf_lblLeft .zcwf_row:after, .zcwf_lblLeft .zcwf_col_fld:after{
-        content: '';
-        display: table;
-        clear: both;
-        }
-        .zcwf_lblLeft .zcwf_col_help{
-        float: left;
-        margin-left: 7px;
-        font-size: 12px;
-        max-width: 35%;
-        word-break: break-word;
-        }
-        .zcwf_lblLeft .zcwf_help_icon{
-        cursor: pointer;
-        width: 16px;
-        height: 16px;
-        display: inline-block;
-        background:  #fff;
-        border: 1px solid  #c0c6cc;
-        color:  #c1c1c1;
-        text-align: center;
-        font-size: 11px;
-        line-height: 16px;
-        font-weight: bold;
-        border-radius: 50%;
-        }
-        .zcwf_lblLeft .zcwf_row {margin: 15px 0px;
-        }
-        .zcwf_lblLeft .formsubmit{
-        margin-right: 5px;
-        cursor: pointer;
-        color:  #313949;
-        font-size: 12px;
-        }
-        .zcwf_lblLeft .zcwf_privacy_txt{
-        width: 90%;
-        color: rgb(0, 0, 0);
-        font-size: 12px;
-        font-family: Arial;
-        display: inline-block;
-        vertical-align: top;
-        color:  #313949;
-        padding-top: 2px;
-        margin-left: 6px;
-        }
-        .zcwf_lblLeft .zcwf_button{
-        font-size: 12px;
-        color:  #313949;
-        border: 1px solid  #c0c6cc;
-        padding: 3px 9px;
-        border-radius: 4px;
-        cursor: pointer;
-        max-width: 120px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        }
-        .zcwf_lblLeft .zcwf_tooltip_over{
-        position: relative;
-        }
-        .zcwf_lblLeft .zcwf_tooltip_ctn{
-        position: absolute;
-        background:  #dedede;
-        padding: 3px 6px;
-        top: 3px;
-        border-radius: 4px;
-        word-break: break-word;
-        min-width: 100px;
-        max-width: 150px;
-        color:  #313949;
-        z-index: 100;
-        }
-        .zcwf_lblLeft .zcwf_ckbox{
-        float: left;
-        }
-        .zcwf_lblLeft .zcwf_file{
-        width: 55%;
-        box-sizing: border-box;
-        float: left;
-        }
-        .cBoth:after{
-        content: '';
-        display: block;
-        clear: both;
-        }
-        @media all and (max-width: 600px){
-            .zcwf_lblLeft .zcwf_col_lab, .zcwf_lblLeft .zcwf_col_fld{
-                width: auto;
-                float: none !important;
-            }
-            .zcwf_lblLeft .zcwf_col_help {width: 40%;}
+        .wf_customMessageBox{
+            font-family: 'Inter', sans-serif;
         }
 
     </style>
@@ -400,174 +311,128 @@
                     <h2 class="text-3xl font-bold text-gray-800 text-center mb-2">Start Your Free Quote Now</h2>
                     <p class="text-gray-700 text-center mb-8">There's no cost or obligation. See your options today.</p>
                     
-                    <!-- Zoho Form Starts Here -->
-                    <div id='crmWebToEntityForm' class='zcwf_lblLeft crmWebToEntityForm' style='background-color: white;color: black;max-width: 600px;'>
-                        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                        <META HTTP-EQUIV='content-type' CONTENT='text/html;charset=UTF-8'>
-                        <form id='webform6942837000000572696' action='https://crm.zoho.com/crm/WebToLeadForm' name=WebToLeads6942837000000572696 method='POST' onSubmit='javascript:document.charset="UTF-8"; return checkMandatory6942837000000572696()' accept-charset='UTF-8'>
-                            <input type='text' style='display:none;' name='xnQsjsdp' value='93d2be4db12d465e2b8d9a5748106e33016dcf731c8fdfa444cd31377e719cdc'>
-                            </input>
-                            <input type='hidden' name='zc_gad' id='zc_gad' value=''>
-                            </input>
-                            <input type='text' style='display:none;' name='xmIwtLD' value='de1a4834cc0f05826f2994748312b31b908fc694692a0b5d4e77fd5ebbcf19eadf4e23cd90213b5ba016ed54ba97c744'>
-                            </input>
-                            <input type='text' style='display:none;' name='actionType' value='TGVhZHM='>
-                            </input>
-                            <input type='text' style='display:none;' name='returnURL' value='null'>
-                            </input>
-                            <!-- Do not remove this code. -->
-                            <div class='zcwf_title' style='max-width: 600px;color: black; font-family:Arial;'>Centanni leads</div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='Last_Name'>Centanni Financial
-                                        <span style='color:red;'>*</span>
-                                    </label>
+                    <div id='crmWebToEntityForm' class='zcwf_lblLeft crmWebToEntityForm'>
+                        <div class='wf_customMessageBox' id='wf_splash' style='display:none'>
+                            <div class='wf_customCircle'>
+                                <div class='wf_customCheckMark'></div>
+                            </div>
+                            <span id='wf_splash_info'></span>
+                        </div>
+                        <form id='webform6942837000000572696' name='WebToLeads6942837000000572696' accept-charset='UTF-8'>
+                            <input type='text' style='display:none;' name='xnQsjsdp' value='104a1961561995b17954604922314fedb75e88c04d6c0b459662388711b52864' />
+                            <input type='hidden' name='zc_gad' id='zc_gad' value='' />
+                            <input type='text' style='display:none;' name='xmIwtLD' value='eb3dfecfbf3d9ab69abfab9061d271bbfb9c7d9e4bc0b1cd86d3f24d40f32f9f48a8f0f5950e3d03f39ca8b12b2857be' />
+                            <input type='text' style='display:none;' name='actionType' value='TGVhZHM=' />
+                            <input type='text' style='display:none;' name='returnURL' value='null' />
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='First_Name'>First Name</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='First_Name' name='First Name' maxlength='40' /></div>
                                 </div>
-                                <div class='zcwf_col_fld'>
-                                    <input type='text' id='Last_Name' aria-required='true' aria-label='Last Name' name='Last Name' aria-valuemax='80' maxlength='80'>
-                                    </input>
-                                    <div class='zcwf_col_help'>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='Last_Name'>Last Name<span style='color:red;'>*</span></label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='Last_Name' name='Last Name' maxlength='80' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='Email'>Email</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' ftype='email' autocomplete='false' id='Email' name='Email' maxlength='100' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='Phone'>Phone</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='Phone' name='Phone' maxlength='30' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF51'>Age</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='LEADCF51' name='LEADCF51' maxlength='9' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='City'>City</label></div>
+                                    <div class='zcwf_col_fld'><input type='text' id='City' name='City' maxlength='100' /></div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF3'>General Health</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF3' name='LEADCF3'>
+                                            <option value='-None-'>- Select -</option>
+                                            <option value='Good'>Good</option>
+                                            <option value='Fair'>Fair</option>
+                                            <option value='Poor'>Poor</option>
+                                            <option value='Other'>Other</option>
+                                        </select>
                                     </div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF1'>Smoking</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF1' name='LEADCF1'>
+                                            <option value='-None-'>- Select -</option>
+                                            <option value='Yes'>Yes</option>
+                                            <option value='No'>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF6'>Coverage Type</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF6' name='LEADCF6'>
+                                            <option value='-None-'>- Select -</option>
+                                            <option value='IUL'>IUL</option>
+                                            <option value='Whole&#x20;life'>Whole life</option>
+                                            <option value='Mortgage&#x20;protection'>Mortgage protection</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF2'>Desired Coverage Amount</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF2' name='LEADCF2'>
+                                            <option value='-None-'>- Select -</option>
+                                            <option value='5000&#x24;'>$5,000</option>
+                                            <option value='20000&#x24;'>$20,000</option>
+                                            <option value='50000&#x24;'>$50,000</option>
+                                            <option value='100000&#x24;'>$100,000</option>
+                                            <option value='250000&#x24;'>$250,000</option>
+                                            <option value='500000&#x24;'>$500,000</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='zcwf_row'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF4'>Desired Term Length</label></div>
+                                    <div class='zcwf_col_fld'>
+                                        <select class='zcwf_col_fld_slt' id='LEADCF4' name='LEADCF4'>
+                                            <option value='-None-'>- Select -</option>
+                                            <option value='10&#x20;years'>10 years</option>
+                                            <option value='15&#x20;Years'>15 Years</option>
+                                            <option value='20&#x20;Years'>20 Years</option>
+                                            <option value='25&#x20;Years'>25 Years</option>
+                                            <option value='30&#x2b;'>30+ Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class='zcwf_row md:col-span-2'>
+                                    <div class='zcwf_col_lab'><label for='LEADCF8'>Add 3 Beneficiaries</label></div>
+                                    <div class='zcwf_col_fld'><textarea id='LEADCF8' name='LEADCF8'></textarea></div>
                                 </div>
                             </div>
                             <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='Designation'>Title</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <input type='text' id='Designation' aria-required='false' aria-label='Designation' name='Designation' aria-valuemax='100' maxlength='100'>
-                                    </input>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='First_Name'>First Name</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <input type='text' id='First_Name' aria-required='false' aria-label='First Name' name='First Name' aria-valuemax='40' maxlength='40'>
-                                    </input>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='Email'>Email</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <input type='text' ftype='email' autocomplete='false' id='Email' aria-required='false' aria-label='Email' name='Email' aria-valuemax='100' crmlabel='' maxlength='100'>
-                                    </input>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='Phone'>Phone</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <input type='text' id='Phone' aria-required='false' aria-label='Phone' name='Phone' aria-valuemax='30' maxlength='30'>
-                                    </input>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='City'>City</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <input type='text' id='City' aria-required='false' aria-label='City' name='City' aria-valuemax='100' maxlength='100'>
-                                    </input>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='LEADCF3'>General Health</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <select class='zcwf_col_fld_slt' role='combobox' aria-expanded='false' aria-haspopup='listbox' id='LEADCF3' onChange='addAriaSelected6942837000000572696()' aria-required='false' aria-label='LEADCF3' name='LEADCF3' multiple>
-                                        <option value='Good'>Good</option>
-                                        <option value='Fair'>Fair</option>
-                                        <option value='Poor'>Poor</option>
-                                        <option value='Other'>Other</option>
-                                    </select>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='LEADCF1'>Somking</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <select class='zcwf_col_fld_slt' role='combobox' aria-expanded='false' aria-haspopup='listbox' id='LEADCF1' onChange='addAriaSelected6942837000000572696()' aria-required='false' aria-label='LEADCF1' name='LEADCF1' multiple>
-                                        <option value='Yes'>Yes</option>
-                                        <option value='No'>No</option>
-                                    </select>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='LEADCF2'>Desired Coverage Amount</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <select class='zcwf_col_fld_slt' role='combobox' aria-expanded='false' aria-haspopup='listbox' id='LEADCF2' onChange='addAriaSelected6942837000000572696()' aria-required='false' aria-label='LEADCF2' name='LEADCF2' multiple>
-                                        <option value='5000&#x24;'>5000&#x24;</option>
-                                        <option value='20000&#x24;'>20000&#x24;</option>
-                                        <option value='50000&#x24;'>50000&#x24;</option>
-                                        <option value='100000&#x24;'>100000&#x24;</option>
-                                        <option value='250000&#x24;'>250000&#x24;</option>
-                                        <option value='500000&#x24;'>500000&#x24;</option>
-                                        <option value='2000000&#x24;'>2000000&#x24;</option>
-                                    </select>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab' style='font-size:12px; font-family: Arial;'>
-                                    <label for='LEADCF4'>Desired Term Length</label>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <select class='zcwf_col_fld_slt' role='combobox' aria-expanded='false' aria-haspopup='listbox' id='LEADCF4' onChange='addAriaSelected6942837000000572696()' aria-required='false' aria-label='LEADCF4' name='LEADCF4' multiple>
-                                        <option value='15&#x20;Years'>15 Years</option>
-                                        <option value='10&#x20;years'>10 years</option>
-                                        <option value='20&#x20;Years'>20 Years</option>
-                                        <option value='25&#x20;Years'>25 Years</option>
-                                        <option value='30&#x2b;'>30&#x2b;</option>
-                                    </select>
-                                    <div class='zcwf_col_help'>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type='text' type='hidden' style='display: none;' name='aG9uZXlwb3Q' value='' />
-                            <div class='zcwf_row'>
-                                <div class='zcwf_col_lab'>
-                                </div>
-                                <div class='zcwf_col_fld'>
-                                    <input type='submit' id='formsubmit' role='button' class='formsubmit zcwf_button' value='Submit' aria-label='Submit' title='Submit'>
-                                    <input type='reset' class='zcwf_button' role='button' name='reset' value='Reset' aria-label='Reset' title='Reset'>
+                                <div class='zcwf_col_fld flex gap-4 mt-4'>
+                                    <input type='submit' id='formsubmit' class='zcwf_button primary-button flex-grow' value='Submit' title='Submit' />
+                                    <input type='reset' class='zcwf_button flex-grow' name='reset' value='Reset' title='Reset' />
                                 </div>
                             </div>
                             <script>
+                                function addAriaSelected6942837000000572696() {} // Dummy function to prevent errors, not needed for single select.
                                 function validateEmail6942837000000572696() {
                                     var form = document.forms['WebToLeads6942837000000572696'];
                                     var emailFld = form.querySelectorAll('[ftype=email]');
-                                    var i;
-                                    for (i = 0; i < emailFld.length; i++) {
+                                    for (var i = 0; i < emailFld.length; i++) {
                                         var emailVal = emailFld[i].value;
-                                        if ((emailVal.replace(/^\s+|\s+$/g, '')).length != 0) {
+                                        if (emailVal.replace(/^\s+|\s+$/g, '').length != 0) {
                                             var atpos = emailVal.indexOf('@');
                                             var dotpos = emailVal.lastIndexOf('.');
                                             if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= emailVal.length) {
-                                                alert('Please enter a valid email address. ');
+                                                alert('Please enter a valid email address.');
                                                 emailFld[i].focus();
                                                 return false;
                                             }
@@ -578,96 +443,64 @@
 
                                 function checkMandatory6942837000000572696() {
                                     var mndFileds = new Array('Last Name');
-                                    var fldLangVal = new Array('Centanni\x20Financial');
-                                    for (i = 0; i < mndFileds.length; i++) {
+                                    var fldLangVal = new Array('Last Name');
+                                    for (var i = 0; i < mndFileds.length; i++) {
                                         var fieldObj = document.forms['WebToLeads6942837000000572696'][mndFileds[i]];
                                         if (fieldObj) {
-                                            if (((fieldObj.value).replace(/^\s+|\s+$/g, '')).length == 0) {
-                                                if (fieldObj.type == 'file') {
-                                                    alert('Please select a file to upload.');
-                                                    fieldObj.focus();
-                                                    return false;
-                                                }
+                                            if ((fieldObj.value).replace(/^\s+|\s+$/g, '').length == 0) {
                                                 alert(fldLangVal[i] + ' cannot be empty.');
                                                 fieldObj.focus();
                                                 return false;
-                                            } else if (fieldObj.nodeName == 'SELECT') {
-                                                if (fieldObj.options[fieldObj.selectedIndex].value == '-None-') {
-                                                    alert(fldLangVal[i] + ' cannot be none.');
-                                                    fieldObj.focus();
-                                                    return false;
-                                                }
-                                            } else if (fieldObj.type == 'checkbox') {
-                                                if (fieldObj.checked == false) {
-                                                    alert('Please accept  ' + fldLangVal[i]);
-                                                    fieldObj.focus();
-                                                    return false;
-                                                }
+                                            } else if (fieldObj.nodeName == 'SELECT' && fieldObj.options[fieldObj.selectedIndex].value == '-None-') {
+                                                alert(fldLangVal[i] + ' cannot be none.');
+                                                fieldObj.focus();
+                                                return false;
                                             }
-                                            try {
-                                                if (fieldObj.name == 'Last Name') {
-                                                    name = fieldObj.value;
-                                                }
-                                            } catch (e) {}
                                         }
                                     }
                                     if (!validateEmail6942837000000572696()) {
                                         return false;
                                     }
-                                    var urlparams = new URLSearchParams(window.location.search);
-                                    if (urlparams.has('service') && (urlparams.get('service') === 'smarturl')) {
-                                        var webform = document.getElementById('webform6942837000000572696');
-                                        var service = urlparams.get('service');
-                                        var smarturlfield = document.createElement('input');
-                                        smarturlfield.setAttribute('type', 'hidden');
-                                        smarturlfield.setAttribute('value', service);
-                                        smarturlfield.setAttribute('name', 'service');
-                                        webform.appendChild(smarturlfield);
-                                    }
                                     document.querySelector('.crmWebToEntityForm .formsubmit').setAttribute('disabled', true);
+                                    return true;
                                 }
-
-                                function tooltipShow6942837000000572696(el) {
-                                    var tooltip = el.nextElementSibling;
-                                    var tooltipDisplay = tooltip.style.display;
-                                    if (tooltipDisplay == 'none') {
-                                        var allTooltip = document.getElementsByClassName('zcwf_tooltip_over');
-                                        for (i = 0; i < allTooltip.length; i++) {
-                                            allTooltip[i].style.display = 'none';
+                                $(document).ready(function() {
+                                    $('#webform6942837000000572696').submit(function(e) {
+                                        e.preventDefault();
+                                        var ismandatory = checkMandatory6942837000000572696();
+                                        if (ismandatory) {
+                                            var formData = new FormData(this);
+                                            $.ajax({
+                                                url: 'https://crm.zoho.com/crm/WebToLeadForm',
+                                                type: 'POST',
+                                                data: formData,
+                                                cache: false,
+                                                contentType: false,
+                                                processData: false,
+                                                success: function(data) {
+                                                    var splashinfodom = document.getElementById('wf_splash_info');
+                                                    splashinfodom.innerText = "Thank you for your submission!";
+                                                    var splashdom = document.getElementById('wf_splash');
+                                                    document.getElementById('webform6942837000000572696').reset();
+                                                    splashdom.style.display = '';
+                                                    setTimeout(function() {
+                                                        splashdom.style.display = 'none';
+                                                    }, 5000);
+                                                    document.querySelector('.crmWebToEntityForm .formsubmit').removeAttribute('disabled');
+                                                },
+                                                error: function(data) {
+                                                    alert('An error occurred. Please try again.');
+                                                    document.querySelector('.crmWebToEntityForm .formsubmit').removeAttribute('disabled');
+                                                }
+                                            });
+                                        } else {
+                                             document.querySelector('.crmWebToEntityForm .formsubmit').removeAttribute('disabled');
                                         }
-                                        tooltip.style.display = 'block';
-                                    } else {
-                                        tooltip.style.display = 'none';
-                                    }
-                                }
-                                
-                                function addAriaSelected6942837000000572696() {
-                                    // This function was missing, causing a reference error.
-                                    // It's intended to update ARIA attributes for accessibility on multi-select fields.
-                                    try {
-                                        var form = document.forms['WebToLeads6942837000000572696'];
-                                        if (!form) return;
-                                        
-                                        var selects = form.querySelectorAll('select[multiple]');
-                                        selects.forEach(function(select) {
-                                            var options = select.options;
-                                            for (var i = 0; i < options.length; i++) {
-                                                var option = options[i];
-                                                option.setAttribute('aria-selected', option.selected);
-                                            }
-                                        });
-                                    } catch (e) {
-                                        console.error("Error in addAriaSelected6942837000000572696:", e);
-                                    }
-                                }
+                                    });
+                                });
                             </script>
-                            <!-- Do not remove this --- Analytics Tracking code starts -->
-                            <script id='wf_anal' src='https://crm.zohopublic.com/crm/WebFormAnalyticsServeServlet?rid=3d827240f9417061b403b180d07a856cb9fab1a217e61abff16365584476d9d867d9f62a4d9c030d76ecc16f13916ff9gidf784f1cb809d8d508c7e14e4c2e301d88b79d95888c8c49ee119cffba06bcd08gide416ed46a9d358296dcb8d6df567d8451084a0dd936d2e96df41e478849c4629gidaad9a13ec7e38454f4fe4cf3b411c726609de4989590526176085a2850ad89d1&tw=409f41a69f70c41f5d37d4e9ba062869b9d4bd3b8f56f67a21e5418094db3d9a'>
-                            </script>
-                            <!-- Do not remove this --- Analytics Tracking code ends. -->
                         </form>
                     </div>
-                    <!-- Zoho Form Ends Here -->
                 </div>
             </div>
         </section>
