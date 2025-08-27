@@ -747,10 +747,26 @@
     </div>
 
     <!-- Consultation Modal -->
-    <div id="consultation-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100]">
-        <div class="bg-white rounded-2xl shadow-2xl overflow-hidden w-11/12 max-w-4xl h-5/6 relative">
-            <button id="close-consultation-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
-            <iframe src="https://calendly.com/centannifinancial/30min" class="w-full h-full border-0"></iframe>
+    <div id="consultation-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[100] p-4">
+        <div id="modal-content-container" class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-lg relative transition-all duration-300">
+            <button id="close-consultation-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl leading-none z-20">&times;</button>
+            
+            <!-- Step 1: Information -->
+            <div id="modal-step-1" class="p-8 text-center">
+                <div class="text-secondary-500 mb-4">
+                    <i class="fas fa-calendar-check text-5xl"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Book Your Free Consultation</h2>
+                <p class="text-gray-700 mb-6">Ready to find the perfect plan? Schedule a free, no-obligation consultation with one of our experts. We'll help you understand your options with zero pressure.</p>
+                <button id="schedule-now-button" class="bg-primary-600 text-white font-bold py-3 px-8 rounded-lg primary-button w-full sm:w-auto">
+                    Find a Time
+                </button>
+            </div>
+    
+            <!-- Step 2: Calendly Iframe (will be populated by JS) -->
+            <div id="modal-step-2" class="hidden relative w-full h-[85vh] max-h-[700px]">
+                <!-- Iframe will be inserted here by JS to avoid loading it unnecessarily -->
+            </div>
         </div>
     </div>
 
@@ -936,18 +952,58 @@
 
             // --- Consultation Modal Logic ---
             const consultationModal = document.getElementById('consultation-modal');
+            const modalContentContainer = document.getElementById('modal-content-container');
             const openConsultationModalButton = document.getElementById('open-consultation-modal');
             const closeConsultationModalButton = document.getElementById('close-consultation-modal');
             const footerBookCallButton = document.getElementById('footer-book-call');
             const footerScheduleConsultationButton = document.getElementById('footer-schedule-consultation');
+            const scheduleNowButton = document.getElementById('schedule-now-button');
+            const modalStep1 = document.getElementById('modal-step-1');
+            const modalStep2 = document.getElementById('modal-step-2');
 
-            const openModal = () => consultationModal.classList.remove('hidden');
-            const closeModal = () => consultationModal.classList.add('hidden');
+            const openModal = () => {
+                // Reset to step 1 every time it opens
+                modalStep1.classList.remove('hidden');
+                modalStep2.classList.add('hidden');
+                modalStep2.innerHTML = ''; // Clear iframe if it exists
+                modalContentContainer.classList.remove('max-w-4xl');
+                modalContentContainer.classList.add('max-w-lg');
+                consultationModal.classList.remove('hidden');
+            };
+
+            const closeModal = () => {
+                consultationModal.classList.add('hidden');
+                // A slight delay to reset the state after the closing animation
+                setTimeout(() => {
+                    modalStep1.classList.remove('hidden');
+                    modalStep2.classList.add('hidden');
+                    modalStep2.innerHTML = '';
+                    modalContentContainer.classList.remove('max-w-4xl');
+                    modalContentContainer.classList.add('max-w-lg');
+                }, 300);
+            };
+
+            const showCalendly = () => {
+                modalStep1.classList.add('hidden');
+                modalStep2.classList.remove('hidden');
+                
+                // Create and append iframe
+                const iframe = document.createElement('iframe');
+                iframe.src = "https://calendly.com/centannifinancial/30min";
+                iframe.className = "w-full h-full border-0";
+                modalStep2.appendChild(iframe);
+
+                // Expand the modal
+                modalContentContainer.classList.remove('max-w-lg');
+                modalContentContainer.classList.add('max-w-4xl');
+            };
 
             openConsultationModalButton.addEventListener('click', openModal);
             footerBookCallButton.addEventListener('click', openModal);
             footerScheduleConsultationButton.addEventListener('click', openModal);
             closeConsultationModalButton.addEventListener('click', closeModal);
+            scheduleNowButton.addEventListener('click', showCalendly);
+
 
             // Close modal if clicking outside of the content
             consultationModal.addEventListener('click', (event) => {
@@ -956,7 +1012,15 @@
                 }
             });
             
-            // Automatically open the modal after 2 seconds
-            setTimeout(openModal, 2000);
+            // Automatically open the modal after 2 seconds, but only once per session
+            setTimeout(() => {
+                if (!sessionStorage.getItem('consultationModalShown')) {
+                    openModal();
+                    sessionStorage.setItem('consultationModalShown', 'true');
+                }
+            }, 2000);
         });
     </script>
+
+</body>
+</html>
